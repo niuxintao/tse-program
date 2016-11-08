@@ -21,6 +21,12 @@ public class TestCaseImplement implements TestCase {
 		this.testInfo = TestCase.UNTESTED;
 	}
 
+	public TestCaseImplement(int[] init) {
+		// TODO Auto-generated constructor stub
+		this.testInfo = TestCase.UNTESTED;
+		this.testCase = init;
+	}
+
 	@Override
 	public boolean equals(Object b) {
 		if (!(b instanceof TestCase))

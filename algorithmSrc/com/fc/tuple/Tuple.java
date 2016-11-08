@@ -313,6 +313,39 @@ public class Tuple {
 
 		return result;
 	}
+
+	public String toString2() {
+		// TODO Auto-generated method stub
+		int[] data = new int[testCase.getLength()];
+		for (int i = 0; i < testCase.getLength(); i++) {
+			data[i] = -1;
+		}
+		for (int i = 0; i < degree; i++) {
+			data[paramIndex[i]] = testCase.getAt(paramIndex[i]);
+		}
+
+		String rs = "";
+		rs += "{";
+		for(int i = 0; i < degree; i++){
+			rs += "(";
+			rs += "p_" + (paramIndex[i]+1) +", ";
+			rs += testCase.getAt(paramIndex[i]);
+			rs += ")";
+			if(i < degree - 1)
+				rs += ",";
+		}
+			
+//		for (int i = 0; i < testCase.getLength(); i++) {
+//			if (data[i] == -1)
+//				rs += " - ";
+//			else
+//				rs += " " + data[i] + " ";
+//			if (i != testCase.getLength() - 1)
+//				rs += ",";
+//		}
+		rs += "}";
+		return rs;
+	}
 }
 
 class CombineStack {

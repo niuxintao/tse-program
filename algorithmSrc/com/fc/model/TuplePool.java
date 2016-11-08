@@ -214,7 +214,9 @@ public class TuplePool {
 	public List<Tuple> getLongestPath() {
 		List<Tuple> result = new ArrayList<Tuple>();
 		List<Tuple> heads = this.getCandidateBugHeads();
+//		printChain("head" , heads);
 		List<Tuple> tails = this.getCandidateRightTails();
+//		printChain("tail" , tails);
 		Tuple canHead = null;
 		Tuple canTail = null;
 		int max = -1;
@@ -231,6 +233,15 @@ public class TuplePool {
 		result = this.getLongestPath(canHead, canTail);
 		return result;
 
+	}
+	
+	public void printChain(String signal, List<Tuple> chain){
+		if(chain == null)
+			return;
+		System.out.println(signal);
+		for(Tuple tuple : chain)
+			System.out.println(tuple.toString2());
+//		System.out.println();
 	}
 
 	private Tuple root = null;

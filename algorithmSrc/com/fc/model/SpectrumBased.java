@@ -38,16 +38,16 @@ public class SpectrumBased {
 			// System.out.println(suite.getAt(i).getStringOfTest());
 			iteratSuite.addTest(suite.getAt(i));
 		}
-		// for(int i = 0 ; i < iteratSuite.getTestCaseNum() ; i ++)
-		// System.out.println(iteratSuite.getAt(i).getStringOfTest());
+//		for (int i = 0; i < iteratSuite.getTestCaseNum(); i++)
+//			System.out.println(iteratSuite.getAt(i).getStringOfTest());
 		List<Tuple> pi = new ArrayList<Tuple>();
 		List<Tuple> tway = getTwayTuplesInTestSuite(iteratSuite, degree);
 		tway = this.removeInPassed(tway, iteratSuite);
 		tway = this.rank(tway, iteratSuite);
 
-		// for (Tuple tuple : tway) {
-		// System.out.println(tuple.toString());
-		// }
+//		for (Tuple tuple : tway) {
+//			System.out.println(tuple.toString());
+//		}
 
 		while (true) {
 			if (tway.size() != 0 && (tway.size() < pi.size() || pi.size() == 0)) {
@@ -75,6 +75,15 @@ public class SpectrumBased {
 			}
 		}
 		failure_inducing = this.reduce(failure_inducing, iteratSuite, degree);
+
+//		System.out.println("failure inducing tuples:");
+//		for (Tuple tuple : this.failure_inducing) {
+//			System.out.println(tuple.toString());
+//		}
+//		System.out.println("addtional:");
+//		for (int i = 0; i < this.addtionalSuite.getTestCaseNum(); i++) {
+//			System.out.println(this.addtionalSuite.getAt(i).getStringOfTest());
+//		}
 	}
 
 	public void execute(TestSuite suite) {
@@ -384,7 +393,7 @@ public class SpectrumBased {
 		HashSet<Tuple> tuples = new HashSet<Tuple>();
 		for (int i = 0; i < suite.getTestCaseNum(); i++) {
 			TestCase testCase = suite.getAt(i);
-			if (testCase.testDescription() == TestCase.FAILED) {
+			if (testCase.testDescription() != TestCase.PASSED) {
 				List<Tuple> temp = this.getTwayTuplesInTestCase(testCase,
 						degree);
 				for (Tuple tuple : temp) {
@@ -463,6 +472,9 @@ public class SpectrumBased {
 					System.out.println(tuple.toString());
 				}
 			}
+			System.out.println(sp.getAddtionalSuite().getTestCaseNum()
+					+ " testcases");
+
 		}
 		// System.out.println("addtional:");
 		// for (int i = 0; i < sp.addtionalSuite.getTestCaseNum(); i++) {

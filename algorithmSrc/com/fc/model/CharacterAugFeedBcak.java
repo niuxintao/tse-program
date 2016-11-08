@@ -26,20 +26,22 @@ public class CharacterAugFeedBcak {
 			CorpTupleWithTestCase generate) {
 		// character
 		while (true) {
-		//	System.out.println("start");
-		//	System.out.println("rs");
+			// System.out.println("start");
+			// System.out.println("rs");
 			workMachine.reset();
-	//		System.out.println("rse");
+			// System.out.println("rse");
 			character(workMachine, caseRunner);
-	//		System.out.println("charact end");
+			// System.out.println("charact end");
 			// validate
 			List<Tuple> bugs = workMachine.getPool().getExistedBugTuples();
 			boolean flag = true;
+			if (flag)
+				break;
 			for (Tuple bug : bugs) {
-			//	 System.out.println("validate");
+				System.out.println("validate");
 				int validate = validateFaultyTuple(bug, workMachine, generate,
 						caseRunner);
-		//		System.out.println("v end");
+				System.out.println("v end");
 				// if not right, keep all the right, deal and character again.
 				if (validate == TestCase.PASSED) {
 					// workMachine.getPool().getExistedBugTuples().remove(bug);
@@ -68,43 +70,43 @@ public class CharacterAugFeedBcak {
 		}
 
 		bugs.addAll(workMachine.getPool().getExistedBugTuples());
-//		System.out.println("bugs");
-//		for(Tuple tuple : bugs){
-//			System.out.println(tuple.toString());
-//		}
-//		System.out.println("rights");
+		// System.out.println("bugs");
+		// for(Tuple tuple : bugs){
+		// System.out.println(tuple.toString());
+		// }
+		// System.out.println("rights");
 		rights.addAll(workMachine.getPool().getExistedRightTuples());
-//		for(Tuple tuple : rights){
-//			System.out.println(tuple.toString());
-//		}
+		// for(Tuple tuple : rights){
+		// System.out.println(tuple.toString());
+		// }
 		for (int i = 0; i < workMachine.getExtraCases().getTestCaseNum(); i++)
 			testCases.add(workMachine.getExtraCases().getAt(i));
 
-		//System.out.println("end");
+		// System.out.println("end");
 		// System.out.println("run import begin");
 		runImportBugs(workMachine, generate, caseRunner);
 		// System.out.println("run import end");
 
 	}
-	
+
 	public void process2(ChainAug workMachine, CaseRunner caseRunner,
 			CorpTupleWithTestCase generate) {
 		// character
 		while (true) {
-		//	System.out.println("start");
-		//	System.out.println("rs");
+			// System.out.println("start");
+			// System.out.println("rs");
 			workMachine.reset();
-	//		System.out.println("rse");
+			// System.out.println("rse");
 			character(workMachine, caseRunner);
-	//		System.out.println("charact end");
+			// System.out.println("charact end");
 			// validate
 			List<Tuple> bugs = workMachine.getPool().getExistedBugTuples();
 			boolean flag = true;
 			for (Tuple bug : bugs) {
-			//	 System.out.println("validate");
+				// System.out.println("validate");
 				int validate = validateFaultyTuple(bug, workMachine, generate,
 						caseRunner);
-		//		System.out.println("v end");
+				// System.out.println("v end");
 				// if not right, keep all the right, deal and character again.
 				if (validate == TestCase.PASSED) {
 					// workMachine.getPool().getExistedBugTuples().remove(bug);
@@ -133,29 +135,31 @@ public class CharacterAugFeedBcak {
 		}
 
 		bugs.addAll(workMachine.getPool().getExistedBugTuples());
-//		System.out.println("bugs");
-//		for(Tuple tuple : bugs){
-//			System.out.println(tuple.toString());
-//		}
-//		System.out.println("rights");
+		// System.out.println("bugs");
+		// for(Tuple tuple : bugs){
+		// System.out.println(tuple.toString());
+		// }
+		// System.out.println("rights");
 		rights.addAll(workMachine.getPool().getExistedRightTuples());
-//		for(Tuple tuple : rights){
-//			System.out.println(tuple.toString());
-//		}
+		// for(Tuple tuple : rights){
+		// System.out.println(tuple.toString());
+		// }
 		for (int i = 0; i < workMachine.getExtraCases().getTestCaseNum(); i++)
 			testCases.add(workMachine.getExtraCases().getAt(i));
-
 
 	}
 
 	public void character(ChainAug workMachine, CaseRunner caseRunner) {
 		while (true) {
-		//	System.out.println("c");
+			// System.out.println("c");
 			TestCase testcase = workMachine.genNextTest();
-		//	System.out.println("end");
+			// System.out.println("end");
 			if (testcase == null)
 				break;
-			// System.out.println(testcase.getStringOfTest());
+			// System.out.print(testcase.getStringOfTest());
+			System.out
+					.println(caseRunner.runTestCase(testcase) == TestCase.PASSED ? "pass"
+							: "fail");
 			workMachine
 					.setLastTestCase(caseRunner.runTestCase(testcase) == TestCase.PASSED);
 		}
@@ -172,6 +176,7 @@ public class CharacterAugFeedBcak {
 	public int validateFaultyTuple(Tuple tuple, ChainAug workMachine,
 			CorpTupleWithTestCase generate, CaseRunner caseRunner) {
 		int result = TestCase.FAILED;
+		System.out.println(tuple.toString2());
 		for (int i = validtedTime(tuple, generate); i < VALIDATETIMES; i++) {
 			TestCase testCase = workMachine.generateTestCaseContainTuple(tuple);
 			result = caseRunner.runTestCase(testCase);
@@ -208,7 +213,7 @@ public class CharacterAugFeedBcak {
 					}
 					CorpTupleWithTestCase generateNew = new CorpTupleWithTestCase(
 							wrongCase, generate.getParam());
-					
+
 					List<Tuple> b = new ArrayList<Tuple>();
 					b.addAll(bugs);
 					generateNew.setCurrentBugs(b);

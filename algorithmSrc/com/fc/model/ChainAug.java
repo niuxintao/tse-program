@@ -15,7 +15,7 @@ public class ChainAug extends CharacterWM {
 	public ChainAug(TuplePool pool, CorpTupleWithTestCase generate) {
 		super(pool, generate);
 		// TODO Auto-generated constructor stub
-		reset();
+//		reset();
 
 	}
 
@@ -31,10 +31,12 @@ public class ChainAug extends CharacterWM {
 		if (head > tail) {
 			this.pool.getExistedBugTuples().add(tuple);
 			this.pool.compress(this.pool.getExistedBugTuples());
+			printChain("currentFss", this.pool.getExistedBugTuples());
 			int last = middle + 1;
 			if (last < this.currentChain.size()) {
 				this.pool.getExistedRightTuples().add(currentChain.get(last));
 				this.pool.compress_r(this.pool.getExistedRightTuples());
+				printChain("currentHss", this.pool.getExistedRightTuples());
 			}
 			this.currCandidate = tuple;
 			suc(currCandidate);
@@ -48,11 +50,12 @@ public class ChainAug extends CharacterWM {
 		if (tail < head) {
 			this.pool.getExistedRightTuples().add(tuple);
 			this.pool.compress_r(this.pool.getExistedRightTuples());
+			printChain("currentHss", this.pool.getExistedRightTuples());
 			int last = middle - 1;
 			if (last >= 0) {
 				this.pool.getExistedBugTuples().add(currentChain.get(last));
 				this.pool.compress(this.pool.getExistedBugTuples());
-
+				printChain("currentFss", this.pool.getExistedBugTuples());
 				this.currCandidate = currentChain.get(last);
 				suc(currCandidate);
 			} else {
@@ -68,13 +71,17 @@ public class ChainAug extends CharacterWM {
 		else {
 			//System.out.println("sc");
 			this.currentChain = this.pool.getPaths(candidateBug);
+			printChain(currentChain);
+			System.out.println("check");
 			//System.out.println("scend");
 			this.head = 0;
 			this.middle = 0;
 			if (currentChain != null)
 				this.tail = currentChain.size() - 1;
-			else
+			else{
+				System.out.println("temp done");
 				this.reset();
+			}
 		}
 	}
 
@@ -82,7 +89,7 @@ public class ChainAug extends CharacterWM {
 	protected Tuple seletctTupleUnderTest() {
 		if (currentChain == null)
 			return null;
-		//System.out.println(currentChain.get(middle).toString());
+		System.out.print(currentChain.get(middle).toString2()+"\t");
 		return currentChain.get(middle);
 	}
 
@@ -90,12 +97,29 @@ public class ChainAug extends CharacterWM {
 		this.currCandidate = null;
 		//System.out.println("start");
 		this.currentChain = pool.getLongestPath();
-		//System.out.println("end");
+		printChain(currentChain);
+		System.out.println("check");
 		this.head = 0;
 		this.middle = 0;
 		if (currentChain != null)
 			this.tail = currentChain.size() - 1;
 		else
 			this.tail = -1;
+	}
+	
+	public void printChain(List<Tuple> chain){
+		if(chain == null)
+			return;
+		System.out.println("current Chain");
+		for(Tuple tuple : chain)
+			System.out.println(tuple.toString2());
+	}
+	
+	public void printChain(String singal, List<Tuple> chain){
+		if(chain == null)
+			return;
+		System.out.println(singal);
+		for(Tuple tuple : chain)
+			System.out.println(tuple.toString2());
 	}
 }

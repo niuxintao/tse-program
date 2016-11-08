@@ -168,7 +168,7 @@ public class BatchTestByFixK {
 
 	public static void main(String[] args) {
 		BatchTestByFixK fk = new BatchTestByFixK();
-		fk.testSingle(100, 3, 2);
+		fk.testSingle(10, 3, 2);
 		//fk.testDouble(50, 3, 2);
 	}
 }

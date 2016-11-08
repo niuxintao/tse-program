@@ -186,7 +186,7 @@ public class BatchAvgTestByFreeK {
 	public static void main(String[] args) {
 		BatchAvgTestByFreeK fk = new BatchAvgTestByFreeK();
 		fk.batchSingle(new int[] { 8, 9, 10 }, 3, 2);
-		fk.batchDouble(new int[] { 8, 9, 10 }, 3, 2);
+//		fk.batchDouble(new int[] { 8, 9, 10 }, 3, 2);
 
 	}
 }
